@@ -16,7 +16,6 @@ class Anitube:
     def __init__(self, _word):
         _word = _word.replace(" ", "+")
         first_url = "http://www.anitube.se/search/?sort=&search_type=videos&search_id=" + _word
-        print(first_url)
         self.word = _word
         self.base_urls.append(first_url)
 
