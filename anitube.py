@@ -13,11 +13,13 @@ class Anitube:
     base_urls = []
     page_count = 1
     word = ""
+    thumbnails = []
 
     def __init__(self, _word):
         _word = _word.replace(" ", "+")
         first_url = "http://www.anitube.se/search/?sort=&search_type=videos&search_id=" + _word
         self.word = _word
+        self.thumbnails = []
         self.base_urls.append(first_url)
 
     # 検索結果(20Links)のページのHTML取得
@@ -92,6 +94,8 @@ class Anitube:
             req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
             html = str(urlopen(req).read())
             url_mp4 = html[578:650]
+            url_thumbnail = html[359:401]
+            thumbnails.append(url_thumbnail)
             if url_mp4[0] != "h":
                 url_mp4 = html[435:504]
             movie_urls.append(url_mp4)
