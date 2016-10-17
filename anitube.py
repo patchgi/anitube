@@ -14,7 +14,9 @@ class Anitube:
     word = ""
 
     def __init__(self, _word):
+        _word = _word.replace(" ", "+")
         first_url = "http://www.anitube.se/search/?sort=&search_type=videos&search_id=" + _word
+        print(first_url)
         self.word = _word
         self.base_urls.append(first_url)
 
@@ -39,6 +41,7 @@ class Anitube:
         for i in range(2, self.page_count + 1):
             self.base_urls.append("http://www.anitube.se/search/" + str(i) + "/?sort=&search_type=videos&search_id=" + self.word)
 
+
         #検索結果のURLをHTMLに変換
         for url in self.base_urls:
             #503対策
@@ -47,8 +50,8 @@ class Anitube:
             html = urlopen(req).read()
             soup = BeautifulSoup(html, 'html.parser')
             soups.append(soup)
-
         return soups
+
 
     # 検索結果の動画のページのURLを取得
     def getChildURLs(self):
@@ -82,9 +85,8 @@ class Anitube:
             sys.stdout.write("getMovieinfo" + progressBar)
             sys.stdout.flush()
         print("")
-
-
         return info_urls
+
 
     # 動画情報ページから動画URLを取得
     def getMovieURL(self):
@@ -94,8 +96,11 @@ class Anitube:
             req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
             html = str(urlopen(req).read())
             url_mp4 = html[578:650]
+            if url_mp4[0] != "h":
+                url_mp4 = html[435:504]
             movie_urls.append(url_mp4)
         return movie_urls
+
 
     def download(self, _path = ""):
         movie_urls = self.getMovieURL()
