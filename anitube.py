@@ -14,12 +14,14 @@ class Anitube:
     page_count = 1
     word = ""
     thumbnails = []
+    titles = []
 
     def __init__(self, _word):
         _word = _word.replace(" ", "+")
         first_url = "http://www.anitube.se/search/?sort=&search_type=videos&search_id=" + _word
         self.word = _word
         self.thumbnails = []
+        self.titles = []
         self.base_urls.append(first_url)
 
     # 検索結果(20Links)のページのHTML取得
@@ -60,6 +62,8 @@ class Anitube:
             title_tags = soup.find_all(class_="videoTitle")
             for tag in title_tags:
                 result.append(tag.find("a").get("href"))
+                title = tag.find("a").string
+                self.titles.append(title)
         return result
 
     # 再生ページのURLから動画情報URL取得
@@ -95,6 +99,7 @@ class Anitube:
             html = str(urlopen(req).read())
             url_mp4 = html[578:650]
             url_thumbnail = html[359:401]
+            url_title = html[:]
             thumbnails.append(url_thumbnail)
             if url_mp4[0] != "h":
                 url_mp4 = html[435:504]
