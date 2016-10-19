@@ -97,12 +97,23 @@ class Anitube:
         for url in info_urls:
             req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
             html = str(urlopen(req).read())
-            url_mp4 = html[578:650]
+            tmp_url_mp4_SD  ="http" + html.split(",")[10].split("http")[1]
+            url_mp4_SD = tmp_url_mp4_SD[:-1]
+            row_HD = html.split(",")[13].split("http")
+            if len(row_HD) == 2:
+                tmp_url_mp4_HD  ="http" + row_HD[1]
+                url_mp4 = tmp_url_mp4_HD[:-1]
+            else:
+                url_mp4 = url_mp4_SD
+
+            url_thumbnail = "http" + html.split(",")[9].split("http")[1][:-1]
+            self.thumbnails.append(url_thumbnail)
+
+            '''url_mp4 = html[578:650]
             url_thumbnail = html[359:401]
-            url_title = html[:]
-            thumbnails.append(url_thumbnail)
+            self.thumbnails.append(url_thumbnail)
             if url_mp4[0] != "h":
-                url_mp4 = html[435:504]
+                url_mp4 = html[435:504]'''
             movie_urls.append(url_mp4)
         return movie_urls
 
