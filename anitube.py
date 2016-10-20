@@ -15,6 +15,7 @@ class Anitube:
     word = ""
     thumbnails = []
     titles = []
+    movies  = []
 
     def __init__(self, _word):
         _word = _word.replace(" ", "+")
@@ -23,6 +24,7 @@ class Anitube:
         self.thumbnails = []
         self.titles = []
         self.base_urls.append(first_url)
+        self.movies = self.getMovieURL()
 
     # 検索結果(20Links)のページのHTML取得
     def getBaseSoup(self):

@@ -2,8 +2,8 @@
 import anitube
 
 if __name__ == "__main__":
-    soup = anitube.Anitube("fate")
-    for idx, url in enumerate(soup.getMovieURL()):
-        print(soup.titles[idx])
+    soup = anitube.Anitube("shakunetsu")
+    for idx in range(len(soup.movies)):
+        print(soup.movies[idx])
         print(soup.thumbnails[idx])
-        print(url)
+        print(soup.titles[idx])
