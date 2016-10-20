@@ -13,7 +13,9 @@ import anitube
 
 if __name__ == "__main__":
     soup = anitube.Anitube("{search word}")
-    for url in soup.getMovieURL():
-        print(url)#mp4file url
+    for idx in range(len(soup.movies)):
+        print(soup.movies[idx]) # mp4file url
+	print(soup.titles[idx]) # movie's title
+	print(soup.thumnails[idx])# image url 
 ```
       
